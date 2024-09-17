@@ -10,6 +10,7 @@ import { Typography } from "@components/Typography";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useState } from "react";
+import { useAuth } from "@hooks/useAuth";
 
 type FormDataProps = {
   user: string
@@ -23,6 +24,7 @@ const signUpSchema = yup.object({
 
 export function SignIn() {
   const [filled, setFilled] = useState<boolean>(false);
+  const { isLogged, signIn } = useAuth();
   const theme = useTheme();
 
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
@@ -35,7 +37,7 @@ export function SignIn() {
 
   function inputFilled() {
     const { user, password } = control._formValues;
-    console.log({ user, password });
+    // console.log({ user, password });
     if (!!user && !!password) {
       setFilled(true);
       return;
@@ -45,12 +47,8 @@ export function SignIn() {
     return;
   }
 
-  function teste() {
-    console.log(control._formValues);
-  }
-
-  async function handleSignUp({ user, password }: FormDataProps) {
-    console.log({ user, password });
+  function handleSignUp({ user, password }: FormDataProps) {
+    signIn(user, password);
   }
 
   return (
@@ -71,7 +69,6 @@ export function SignIn() {
               <Input
                 icon={User}
                 onChangeText={onChange}
-                onChange={() => teste()}
                 value={value}
                 label="Usuário"
                 placeholderTextColor={theme.COLORS.WHITE}
