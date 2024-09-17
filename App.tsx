@@ -3,16 +3,20 @@ import theme from './src/theme';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from 'styled-components/native';
+import { AuthContextProvider } from '@contexts/AuthContext';
+import { Routes } from '@routes/index';
+
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <SafeAreaProvider style={{ flex: 1 }} >
+    <SafeAreaProvider style={{ flex: 1 }} >
+      <ThemeProvider theme={theme}>
         <StatusBar
-          translucent
           backgroundColor="transparent"
         />
-        <SignIn />
-      </SafeAreaProvider>
-    </ThemeProvider>
+        <AuthContextProvider>
+          <Routes />
+        </AuthContextProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
