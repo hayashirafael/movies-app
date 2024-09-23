@@ -24,7 +24,7 @@ const signUpSchema = yup.object({
 
 export function SignIn() {
   const [filled, setFilled] = useState<boolean>(false);
-  const { isLogged, signIn } = useAuth();
+  const { isAuthenticated: isLogged, signIn } = useAuth();
   const theme = useTheme();
 
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
