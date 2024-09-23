@@ -5,19 +5,18 @@ import { useAuth } from '@hooks/useAuth';
 
 import { useTheme } from "styled-components/native";
 import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export function Routes() {
-  const theme = useTheme();
-  const { isLogged, signIn } = useAuth();
+  const { COLORS } = useTheme();
+  const { isAuthenticated } = useAuth();
 
-  // const navigationTheme = DefaultTheme;
-  // navigationTheme.colors.background = 
+  const navigationTheme = DefaultTheme;
+  navigationTheme.colors.background = COLORS.GREY700
 
   return (
-    <View style={{ flex: 1 }}>
-      <NavigationContainer >
-        {isLogged ? <AppRoutes /> : <AuthRoutes />}
-      </NavigationContainer>
-    </View>
+    <NavigationContainer theme={navigationTheme} >
+      {isAuthenticated ? <AppRoutes /> : <AuthRoutes />}
+    </NavigationContainer>
   )
 }

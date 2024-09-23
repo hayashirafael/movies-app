@@ -1,44 +1,46 @@
 import { useTheme } from "styled-components/native";
-import { createBottomTabNavigator, BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { Home } from "@screens/Home";
+import { Header } from "@components/Header";
+import { createStackNavigator } from "@react-navigation/stack";
+import { AppTabsRoutes } from "./app.tabs.routes";
+import { MovieDetails } from "@screens/MovieDetails";
+import { MovieDTO } from "@dtos/movie";
+import { ButtonIcon } from "@components/ButtonIcon";
+import { Star } from "lucide-react-native";
 
-type AppRoutes = {
-  exercise: { exerciseId: string };
-  history: undefined;
+export type AppRoutes = {
   home: undefined;
-  profile: undefined;
+  movieDetails: { movie: MovieDTO };
 }
 
-export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
-
-const { Navigator, Screen } = createBottomTabNavigator<AppRoutes>();
+const Stack = createStackNavigator<AppRoutes>();
 
 export function AppRoutes() {
   const theme = useTheme();
+
   return (
-    <Navigator
+    <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarShowLabel: false,
-
-        // tabBarActiveTintColor: theme.colors["green-500"],
-        // tabBarInactiveTintColor: theme.colors["gray-200"],
-        // tabBarStyle: {
-        //   backgroundColor: theme.colors["gray-600"],
-        //   borderTopWidth: 0,
-        //   // height: Platform.OS === 'android' ? 100 : 96,
-        //   // paddingBottom: 10,
-        //   // paddingTop: 6,
-        // }
+        headerStyle: {
+          borderWidth: 0
+        }
       }}
       initialRouteName="home"
     >
-      <Screen
+      <Stack.Screen
         name="home"
-        component={Home}
-      // options={{ tabBarIcon: ({ color, size }) => <HomeSvg fill={color} height={size} width={size} /> }}
+        component={AppTabsRoutes}
+        options={{
+          headerShown: true,
+          header: () => <Header />,
+        }}
       />
 
-    </Navigator>
+      <Stack.Screen
+        name="movieDetails"
+        component={MovieDetails}
+      />
+
+    </Stack.Navigator>
   )
 }
