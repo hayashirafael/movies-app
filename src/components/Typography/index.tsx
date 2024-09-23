@@ -4,7 +4,9 @@ import * as S from "./styles";
 export interface ITypographyProps extends TextProps {
   text: string
   color?: string
+  size?: number
   align?: 'left' | 'center' | 'right'
+  font?: 'regular' | 'bold'
   upperCase?: boolean
 }
 
