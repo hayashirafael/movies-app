@@ -7,10 +7,10 @@ type Props = ActivityIndicatorProps & {
 }
 
 export function Loading({ color, ...rest }: Props) {
-  const { COLORS } = useTheme();
+  // const { COLORS } = useTheme();
   return (
     <LoadIndicator
-      color={color ? color : COLORS.GREY200}
+      color='#EC8B00'
       {...rest}
     />
   )
