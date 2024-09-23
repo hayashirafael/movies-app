@@ -3,7 +3,7 @@ import { createContext, ReactNode, useState } from "react";
 export type AuthContextDataProps = {
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
-  isLogged: boolean;
+  isAuthenticated: boolean;
 }
 
 type AuthContextProviderProps = {
@@ -14,13 +14,13 @@ type AuthContextProviderProps = {
 export const AuthContext = createContext<AuthContextDataProps>({} as AuthContextDataProps);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [isLogged, setIsLogged] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
 
 
   async function signIn(user: string, password: string) {
     try {
       if (user === 'user' && password === '123') {
-        setIsLogged(true);
+        setIsAuthenticated(true);
       }
     } catch (error) {
       throw error
@@ -33,7 +33,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   return (
     <AuthContext.Provider value={{
-      isLogged,
+      isAuthenticated,
       signIn,
       signOut,
     }}>
