@@ -4,8 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { AppTabsRoutes } from "./app.tabs.routes";
 import { MovieDetails } from "@screens/MovieDetails";
 import { MovieDTO } from "@dtos/movie";
-import { ButtonIcon } from "@components/ButtonIcon";
-import { Star } from "lucide-react-native";
 
 export type AppRoutes = {
   home: undefined;
@@ -15,8 +13,6 @@ export type AppRoutes = {
 const Stack = createStackNavigator<AppRoutes>();
 
 export function AppRoutes() {
-  const theme = useTheme();
-
   return (
     <Stack.Navigator
       screenOptions={{
