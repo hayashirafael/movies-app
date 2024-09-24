@@ -1,12 +1,14 @@
 import { MovieDTO } from "@dtos/movie";
 import { addStorageFavoriteMovie, getStorageFavoriteList, deleteAll } from "@libs/asyncStorage/favoriteMoviesStorage";
+import { getMoviesList } from "@services/getMoviesList";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 export type MovieContextDataProps = {
-  favoriteMovies: MovieDTO[];
   addFavoriteMovie: (movie: MovieDTO) => Promise<void>;
   getFavoriteMovies: () => Promise<void>;
   deleteMovies: () => Promise<void>;
+  favoriteMovies: MovieDTO[];
+  movies: MovieDTO[];
 }
 
 type MovieContextProviderProps = {
@@ -17,6 +19,12 @@ export const MovieContext = createContext<MovieContextDataProps>({} as MovieCont
 
 export function MovieContextProvider({ children }: MovieContextProviderProps) {
   const [favoriteMovies, setFavoritesMovies] = useState<MovieDTO[]>([]);
+  const [movies, setMovies] = useState<MovieDTO[]>([]);
+
+  async function getAllMovies() {
+    const response = await getMoviesList();
+    setMovies(response);
+  }
 
   async function addFavoriteMovie(movie: MovieDTO) {
     await addStorageFavoriteMovie(movie);
@@ -35,6 +43,7 @@ export function MovieContextProvider({ children }: MovieContextProviderProps) {
   }
 
   useEffect(() => {
+    getAllMovies();
     getFavoriteMovies();
   }, [])
 
@@ -43,6 +52,7 @@ export function MovieContextProvider({ children }: MovieContextProviderProps) {
       addFavoriteMovie,
       getFavoriteMovies,
       deleteMovies,
+      movies,
       favoriteMovies
     }}>
       {children}
