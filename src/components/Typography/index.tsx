@@ -1,20 +1,24 @@
 import { TextProps } from "react-native";
 import * as S from "./styles";
 
-export interface ITypographyProps extends TextProps {
+export interface ITypography extends TextProps {
   text: string
   color?: string
   size?: number
   align?: 'left' | 'center' | 'right'
-  font?: 'regular' | 'bold'
-  upperCase?: boolean
+  fontFamily?: 'REGULAR' | 'MEDIUM' | 'BOLD'
 }
 
-export function Typography({ upperCase, ...props }: ITypographyProps) {
-  const textChildren = upperCase ? props.text.toUpperCase() : props.text;
+export function Typography({ text, color, size, align, fontFamily, ...props }: ITypography) {
   return (
-    <S.Typography {...props}>
-      {textChildren}
+    <S.Typography
+      color={color}
+      size={size}
+      align={align}
+      font={fontFamily}
+      {...props}
+    >
+      {text}
     </S.Typography>
   )
 }

@@ -26,7 +26,7 @@ export function MovieInfo({ label, icon, info }: IMovieInfo) {
           text={label}
           color={theme.COLORS.ORANGE}
           size={14}
-          font='bold'
+          fontFamily='BOLD'
           style={{
             marginLeft: 8
           }}
@@ -38,6 +38,7 @@ export function MovieInfo({ label, icon, info }: IMovieInfo) {
           text={info}
           color={theme.COLORS.WHITE}
           size={20}
+          fontFamily='BOLD'
         />
       </S.BottomContainer>
     </S.Container>

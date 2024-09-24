@@ -1,9 +1,21 @@
 import styled from "styled-components/native";
-import { ITypographyProps } from "@components/Typography";
 
-export const Typography = styled.Text<ITypographyProps>`
+const getFontFamily = (fontType?: string) => {
+  switch (fontType) {
+    case 'BOLD':
+      return 'Nunito_700Bold';
+    case 'MEDIUM':
+      return 'Nunito_500Medium';
+    case 'REGULAR':
+      return 'Nunito_400Regular';
+    default:
+      return 'Nunito_400Regular';
+  }
+};
+
+export const Typography = styled.Text<{color?: string, font?: string, align?: string, size?: number}>`
   color: ${({ theme, color }) => color ? color : theme.COLORS.WHITE};
   text-align: ${({ align }) => align ? align : 'left'};
   font-size: ${({ size }) => size ? size + 'px' : '16px'};
-  font-family: ${({font}) => font === 'bold' ? 'Nunito_700Bold' : 'Nunito_400Regular' };
+  font-family: ${({font}) => getFontFamily(font) };
   `;

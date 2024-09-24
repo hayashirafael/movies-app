@@ -1,6 +1,5 @@
 import { TouchableOpacityProps } from 'react-native';
 import * as S from './styles'
-import { Loading } from '@components/Loading';
 
 export interface IMoviePoster extends TouchableOpacityProps {
   posterUrl: string

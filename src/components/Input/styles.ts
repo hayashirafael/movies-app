@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-export const InputContainer = styled.View<{ focused: boolean }> `
+export const InputContainer = styled.View<{ focused: boolean }>`
   background-color: ${({ theme }) => theme.COLORS.GREY500};
   flex-direction: row;
   width: 100%;
@@ -27,11 +27,11 @@ export const ClearButton = styled.TouchableOpacity``;
 export const VerticalInputContainer = styled.View`
   flex-direction: column;
   padding: 0 12px;
+  width: 100%;
 `;
 
 export const HorizontalInputContainer = styled.View`
   flex-direction: row;
-  /* padding: 0 12px; */
 `;
  
 export const InputLabel = styled.Text<{ focused: boolean}>`

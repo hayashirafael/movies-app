@@ -33,7 +33,6 @@ export function Input({ icon: Icon, value, onChangeText, label, errorMessage, is
             )
           }
 
-          {/* <S.HorizontalInputContainer> */}
           <S.Input
             placeholder={label}
             onFocus={() => setIsFocused(true)}
@@ -43,8 +42,6 @@ export function Input({ icon: Icon, value, onChangeText, label, errorMessage, is
             value={value}
             {...props}
           />
-
-          {/* </S.HorizontalInputContainer> */}
 
         </S.VerticalInputContainer>
 

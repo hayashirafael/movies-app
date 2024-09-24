@@ -11,5 +11,6 @@ export const Button = styled.TouchableOpacity<{isFilled: boolean}>`
 
 export const Text = styled.Text<{ isFilled: boolean }>`
   font-size: 14px;
-  color: ${({theme: {COLORS}, isFilled}) => isFilled ? COLORS.WHITE : COLORS.GREY700};
+  font-family: ${({theme}) => theme.FONT_FAMILY.MEDIUM};
+  color: ${({ theme: { COLORS }, isFilled }) => isFilled ? COLORS.WHITE : COLORS.GREY700};
 `;
