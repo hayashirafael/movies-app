@@ -1,33 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as S from "./styles";
 import { MoviePoster } from "@components/MoviePoster";
-import { MovieDTO } from "@dtos/movie";
-import { getMoviesList } from "@services/getMoviesList";
 import { Loading } from "@components/Loading";
 import { useNavigation } from "@react-navigation/native";
+import { useMovie } from "@hooks/useMovie";
 
 export function AllMovies() {
-  const [movies, setMovies] = useState<MovieDTO[]>([]);
+  const {
+    movies
+  } = useMovie();
   const [isLoading, setIsLoading] = useState(false);
   const { navigate } = useNavigation();
-
-  async function getMovies() {
-    try {
-      setIsLoading(true);
-      const response = await getMoviesList();
-      if (response) {
-        setMovies(response)
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    getMovies()
-  }, []);
 
   if (isLoading) return <Loading />
 

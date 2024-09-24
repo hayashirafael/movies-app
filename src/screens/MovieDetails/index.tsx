@@ -8,7 +8,7 @@ import { NativeScrollEvent, NativeSyntheticEvent, ScrollView } from "react-nativ
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
 import { MovieInfo } from "@components/MovieInfo";
-import { ArrowLeft, Heart, Star } from "lucide-react-native";
+import { ArrowLeft, Heart } from "lucide-react-native";
 import dayjs from "dayjs";
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppRoutes } from "@routes/app.routes";
@@ -27,16 +27,16 @@ interface IMovieDetailsProps {
 
 export function MovieDetails({ navigation, route }: IMovieDetailsProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [showHeaderTitle, setShowHeaderTitle] = useState(false);
+  const [showHeaderTitle, setShowHeaderTitle] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const routeNavigation = useRoute();
   const { movie } = routeNavigation.params as RouteParamProps;
   const theme = useTheme();
-  const { addFavoriteMovie, getFavoriteMovies, favoriteMovies, deleteMovies } = useMovie();
+  const { addFavoriteMovie, favoriteMovies } = useMovie();
 
   const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetY = event.nativeEvent.contentOffset.y;
-    const threshold = 100;
+    const threshold = 50;
 
     if (offsetY > threshold) {
       setShowHeaderTitle(false);
@@ -64,14 +64,15 @@ export function MovieDetails({ navigation, route }: IMovieDetailsProps) {
   useEffect(() => {
     getIfFavoriteMovie();
     navigation.setOptions({
-      headerStyle: { backgroundColor: theme.COLORS.GREY500 },
+      headerStyle: { backgroundColor: theme.COLORS.GREY500, height: 110 },
+      headerTitleAlign: 'center',
       headerTransparent: showHeaderTitle,
       headerShown: true,
-      headerTitle: () => <Typography color={theme.COLORS.WHITE} size={22} text={!showHeaderTitle ? movie.title : ''} />,
+      headerTitle: () => <Typography color={theme.COLORS.WHITE} style={{ lineHeight: 28 }} size={22} text={!showHeaderTitle ? movie.title : ''} />,
       headerLeft: () => <ButtonIcon onPress={() => navigation.goBack()} icon={ArrowLeft} iconBgColor={theme.COLORS.GREY700} iconColor={isFavorite ? theme.COLORS.ORANGE : theme.COLORS.WHITE} style={{ marginLeft: 16 }} />,
       headerRight: () => <ButtonIcon onPress={() => handleAddFavorite()} fill icon={Heart} iconBgColor={isFavorite ? theme.COLORS.ORANGE : theme.COLORS.WHITE} iconColor={theme.COLORS.GREY700} style={{ marginRight: 16 }} />,
     })
-  }, [movie, showHeaderTitle, favoriteMovies, isFavorite])
+  }, [movie, showHeaderTitle, favoriteMovies, isFavorite, navigation])
 
   if (isLoading) return <Loading />
 
@@ -84,13 +85,13 @@ export function MovieDetails({ navigation, route }: IMovieDetailsProps) {
         />
         <S.TextContainer>
           <S.TitleContainer>
-            <Typography text={movie.title} size={28} />
+            <Typography text={movie.title} size={28} fontFamily="BOLD" />
           </S.TitleContainer>
 
-          <Typography text="SINOPSE" size={14} color={theme.COLORS.ORANGE} />
+          <Typography text="SINOPSE" size={14} color={theme.COLORS.ORANGE} fontFamily="BOLD" />
 
           <S.OverviewContainer>
-            <Typography text={movie.overview} />
+            <Typography text={movie.overview} fontFamily="REGULAR" />
           </S.OverviewContainer>
 
           <S.InfoContainer>

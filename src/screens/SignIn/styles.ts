@@ -1,4 +1,3 @@
-import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 
 export const Container = styled.View`
@@ -6,7 +5,6 @@ export const Container = styled.View`
   background-color: ${({theme: {COLORS}}) => COLORS.GREY700};
   align-items: center;
   justify-content: center;
-  width: 100%;
   padding: 0 20px;
 `;
 
