@@ -8,3 +8,17 @@ export const Container = styled.View`
   width: 100%;
   align-items: center;
 `;
+
+export const MenuContainer = styled.View`
+  margin-left: auto;
+`;
+
+export const LogoutPopContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  background-color: ${({ theme }) => theme.COLORS.GREY500};
+  padding: 10px 24px;
+  align-items: center;
+  border-radius: 8px;
+`;
+
+export const MenuIconTouchable = styled.TouchableOpacity``;
