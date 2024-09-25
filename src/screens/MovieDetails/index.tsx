@@ -4,7 +4,7 @@ import { MovieDTO } from "@dtos/movie";
 import { Loading } from "@components/Loading";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Typography } from "@components/Typography";
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView } from "react-native";
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, TouchableOpacity } from "react-native";
 import { useTheme } from "styled-components/native";
 import { StatusBar } from "expo-status-bar";
 import { MovieInfo } from "@components/MovieInfo";
@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppRoutes } from "@routes/app.routes";
 import { RouteProp } from '@react-navigation/native';
-import { ButtonIcon } from "@components/ButtonIcon";
+import { CustomIcon } from "@components/ButtonIcon";
 import { useMovie } from "@hooks/useMovie";
 
 type RouteParamProps = {
@@ -69,8 +69,14 @@ export function MovieDetails({ navigation, route }: IMovieDetailsProps) {
       headerTransparent: showHeaderTitle,
       headerShown: true,
       headerTitle: () => <Typography color={theme.COLORS.WHITE} style={{ lineHeight: 28 }} size={22} text={!showHeaderTitle ? movie.title : ''} />,
-      headerLeft: () => <ButtonIcon onPress={() => navigation.goBack()} icon={ArrowLeft} iconBgColor={theme.COLORS.GREY700} iconColor={isFavorite ? theme.COLORS.ORANGE : theme.COLORS.WHITE} style={{ marginLeft: 16 }} />,
-      headerRight: () => <ButtonIcon onPress={() => handleAddFavorite()} fill icon={Heart} iconBgColor={isFavorite ? theme.COLORS.ORANGE : theme.COLORS.WHITE} iconColor={theme.COLORS.GREY700} style={{ marginRight: 16 }} />,
+      headerLeft: () =>
+        <S.BackButtonTouchable onPress={() => navigation.goBack()}>
+          <CustomIcon icon={ArrowLeft} iconBgColor={theme.COLORS.GREY700} iconColor={isFavorite ? theme.COLORS.ORANGE : theme.COLORS.WHITE} />
+        </S.BackButtonTouchable>,
+      headerRight: () =>
+        <S.FavoriteButtonTouchable onPress={() => handleAddFavorite()}>
+          <CustomIcon fill icon={Heart} iconBgColor={isFavorite ? theme.COLORS.ORANGE : theme.COLORS.WHITE} iconColor={theme.COLORS.GREY700} />
+        </S.FavoriteButtonTouchable>
     })
   }, [movie, showHeaderTitle, favoriteMovies, isFavorite, navigation])
 

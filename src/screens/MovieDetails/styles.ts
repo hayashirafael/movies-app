@@ -31,3 +31,10 @@ export const InfoContainer = styled.View`
   margin-bottom: 16px;
   margin-top: 32px;
 `;
+
+export const BackButtonTouchable = styled.TouchableOpacity`
+  margin-left: 16px;
+`;
+export const FavoriteButtonTouchable = styled.TouchableOpacity`
+  margin-right: 16px;
+`;
