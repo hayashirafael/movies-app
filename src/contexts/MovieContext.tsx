@@ -4,11 +4,10 @@ import { getMoviesList } from "@services/getMoviesList";
 import { createContext, ReactNode, useEffect, useState } from "react";
 
 export type MovieContextDataProps = {
+  movies: MovieDTO[];
+  favoriteMovies: MovieDTO[];
   addFavoriteMovie: (movie: MovieDTO) => Promise<void>;
   getFavoriteMovies: () => Promise<void>;
-  deleteMovies: () => Promise<void>;
-  favoriteMovies: MovieDTO[];
-  movies: MovieDTO[];
 }
 
 type MovieContextProviderProps = {
@@ -37,11 +36,6 @@ export function MovieContextProvider({ children }: MovieContextProviderProps) {
     setFavoritesMovies(response);
   }
 
-  async function deleteMovies() {
-    await deleteAll();
-    await getFavoriteMovies();
-  }
-
   useEffect(() => {
     getAllMovies();
     getFavoriteMovies();
@@ -51,7 +45,6 @@ export function MovieContextProvider({ children }: MovieContextProviderProps) {
     <MovieContext.Provider value={{
       addFavoriteMovie,
       getFavoriteMovies,
-      deleteMovies,
       movies,
       favoriteMovies
     }}>
