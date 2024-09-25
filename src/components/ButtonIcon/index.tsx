@@ -10,18 +10,16 @@ export type IButtonIcon = TouchableOpacityProps & {
   fill?: boolean
 }
 
-export function ButtonIcon({ icon: Icon, fill, iconBgColor, iconColor, ...rest }: IButtonIcon) {
+export function CustomIcon({ icon: Icon, fill, iconBgColor, iconColor, ...rest }: IButtonIcon) {
   const { COLORS } = useTheme();
   return (
-    <S.TouchableOpacityIcon {...rest}>
-      <S.IconContainer bgColor={iconBgColor}>
-        <Icon
-          width={14}
-          height={14}
-          color={iconColor ? iconColor : COLORS.GREY200}
-          fill={fill ? iconColor : 'transparent'}
-        />
-      </S.IconContainer>
-    </S.TouchableOpacityIcon>
+    <S.IconContainer bgColor={iconBgColor}>
+      <Icon
+        width={14}
+        height={14}
+        color={iconColor ? iconColor : COLORS.GREY200}
+        fill={fill ? iconColor : 'transparent'}
+      />
+    </S.IconContainer>
   );
 };

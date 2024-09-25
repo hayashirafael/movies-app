@@ -2,7 +2,7 @@ import { TouchableOpacityProps } from 'react-native';
 import * as S from './styles'
 import { Loading } from '@components/Loading';
 import { LucideIcon } from 'lucide-react-native';
-import { ButtonIcon } from '@components/ButtonIcon';
+import { CustomIcon } from '@components/ButtonIcon';
 import { useTheme } from 'styled-components/native';
 import { Typography } from '@components/Typography';
 
@@ -17,7 +17,7 @@ export function MovieInfo({ label, icon, info }: IMovieInfo) {
   return (
     <S.Container>
       <S.TopContainer>
-        <ButtonIcon
+        <CustomIcon
           icon={icon}
           iconBgColor={theme.COLORS.GREY700}
           iconColor={theme.COLORS.ORANGE}
