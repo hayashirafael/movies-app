@@ -1,8 +1,5 @@
 import styled from "styled-components/native";
 
-export const TouchableOpacityIcon = styled.TouchableOpacity`
-`;
-
 export const IconContainer = styled.View<{bgColor: string}>`
   width: 24px;
   height: 24px;
