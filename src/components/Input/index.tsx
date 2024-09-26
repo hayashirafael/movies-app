@@ -1,6 +1,6 @@
-import { TextInputProps } from 'react-native';
+import { TextInput, TextInputProps } from 'react-native';
 import * as S from './styles';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { useTheme } from 'styled-components/native';
 import { LucideIcon, CircleX } from 'lucide-react-native';
 import { Typography } from '@components/Typography';
@@ -12,7 +12,7 @@ export interface IInputProps extends TextInputProps {
   label: string
 }
 
-export function Input({ icon: Icon, value, onChangeText, label, errorMessage, isValid = false, ...props }: IInputProps) {
+export const Input = forwardRef<TextInput, IInputProps>(({ icon: Icon, value, onChangeText, label, errorMessage, isValid = false, ...props }, ref) => {
   const { COLORS } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
   return (
@@ -34,6 +34,7 @@ export function Input({ icon: Icon, value, onChangeText, label, errorMessage, is
           }
 
           <S.Input
+            ref={ref}
             placeholder={label}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
@@ -67,4 +68,4 @@ export function Input({ icon: Icon, value, onChangeText, label, errorMessage, is
 
     </S.Container>
   )
-}
+})

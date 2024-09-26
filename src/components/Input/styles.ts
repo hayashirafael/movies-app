@@ -1,3 +1,4 @@
+import { TextInput } from "react-native";
 import styled from "styled-components/native";
 
 export const InputContainer = styled.View<{ focused: boolean }>`
@@ -17,7 +18,7 @@ export const Container = styled.View`
   width: 100%;
 `;
 
-export const Input = styled.TextInput<{ focused: boolean }>`
+export const Input = styled(TextInput)<{ focused: boolean }>`
   color: ${({ theme}) => theme.COLORS.WHITE};
   font-size: 16px;
 `;
