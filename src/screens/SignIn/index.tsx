@@ -1,4 +1,4 @@
-import { Image, Keyboard } from "react-native";
+import { Image, Keyboard, TextInput } from "react-native";
 import * as S from "./styles";
 import { useTheme } from "styled-components/native";
 import Logo from '../../assets/icon.png';
@@ -9,7 +9,7 @@ import { Button } from "@components/Button";
 import { Typography } from "@components/Typography";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@hooks/useAuth";
 
 type FormDataProps = {
@@ -22,15 +22,14 @@ const signUpSchema = yup.object({
   password: yup.string().required('Informe a senha').min(3, 'A senha deve ao menos 3 dígitos'),
 });
 
-
-
 export function SignIn() {
   const [filled, setFilled] = useState<boolean>(false);
-  const { signIn } = useAuth();
+  const { signIn, authError } = useAuth();
   const theme = useTheme();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const passwordRef = useRef<TextInput>(null);
 
-  const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
+  const { control, handleSubmit, formState: { errors }, setError } = useForm<FormDataProps>({
     resolver: yupResolver(signUpSchema)
   });
 
@@ -68,6 +67,13 @@ export function SignIn() {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof authError === 'string') {
+      setError('user', { message: authError })
+      setError('password', { message: authError })
+    }
+  }, [authError])
+
   return (
     <S.Container>
       {
@@ -92,6 +98,8 @@ export function SignIn() {
             label="Usuário"
             placeholderTextColor={theme.COLORS.WHITE}
             errorMessage={errors.user?.message}
+            returnKeyType="next"
+            onSubmitEditing={() => passwordRef.current?.focus()}
           />
         )}
       />
@@ -101,6 +109,7 @@ export function SignIn() {
         rules={{ required: 'Informe a senha' }}
         render={({ field: { onChange, value } }) => (
           <Input
+            ref={passwordRef}
             icon={Lock}
             onChangeText={onChange}
             onChange={() => inputFilled()}
@@ -110,6 +119,7 @@ export function SignIn() {
             secureTextEntry
             keyboardType="numeric"
             placeholderTextColor={theme.COLORS.WHITE}
+            onSubmitEditing={handleSubmit(handleSignUp)}
           />
 
         )}
