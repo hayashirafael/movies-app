@@ -1,4 +1,4 @@
-import { TouchableOpacityProps } from 'react-native';
+import { TouchableOpacityProps, ViewProps } from 'react-native';
 import * as S from './styles'
 import { Loading } from '@components/Loading';
 import { LucideIcon } from 'lucide-react-native';
@@ -6,16 +6,16 @@ import { CustomIcon } from '@components/ButtonIcon';
 import { useTheme } from 'styled-components/native';
 import { Typography } from '@components/Typography';
 
-export interface IMovieInfo {
+export interface IMovieInfo extends ViewProps {
   label: string
   icon: LucideIcon
   info: string
 }
 
-export function MovieInfo({ label, icon, info }: IMovieInfo) {
+export function MovieInfo({ label, icon, info, ...rest }: IMovieInfo) {
   const theme = useTheme();
   return (
-    <S.Container>
+    <S.Container {...rest}>
       <S.TopContainer>
         <CustomIcon
           icon={icon}
