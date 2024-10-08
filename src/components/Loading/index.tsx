@@ -1,5 +1,6 @@
 import { LoadIndicator } from "./styles";
 import { ActivityIndicatorProps } from "react-native";
+import theme from '../../theme/index'
 
 type Props = ActivityIndicatorProps & {
   color?: string
@@ -8,7 +9,8 @@ type Props = ActivityIndicatorProps & {
 export function Loading({ color, ...rest }: Props) {
   return (
     <LoadIndicator
-      color='#EC8B00'
+      testID="loading"
+      color={theme.COLORS.WHITE}
       {...rest}
     />
   )
