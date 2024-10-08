@@ -6,6 +6,12 @@ export const Container = styled.View`
   flex: 1;
 `;
 
+export const ErrorContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Text = styled.Text``;
 
 export const ItemSeparator = styled.View`
