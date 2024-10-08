@@ -1,27 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import * as S from "./styles";
 import { MoviePoster } from "@components/MoviePoster";
-import { MovieDTO } from "@dtos/movie";
-import { getMoviesList } from "@services/getMoviesList";
 import { Loading } from "@components/Loading";
-import { useNavigation } from "@react-navigation/native";
 import { useMovie } from "@hooks/useMovie";
+import { useNavigation } from "@react-navigation/native";
 
 export function FavoriteMovies() {
-  const [isLoading, setIsLoading] = useState(false);
   const { navigate } = useNavigation();
-  const { favoriteMovies } = useMovie();
+  const { favoriteMovies, getFavoriteMovies, isLoading } = useMovie();
 
-  if (isLoading) return <Loading />
+  if (isLoading) return <Loading />;
+
+  useEffect(() => {
+    getFavoriteMovies();
+  }, [])
 
   return (
-    <S.Container>
+    <S.Container testID="favorite-container">
       <S.MoviesList
         data={favoriteMovies}
         keyExtractor={(item) => String(item.id)}
         ItemSeparatorComponent={S.ItemSeparator}
         renderItem={({ item, index }) => (
           <MoviePoster
+            testID={`favorite-movie-${index}`}
             posterUrl={item.poster_path}
             onPress={() => navigate("movieDetails", { movie: item })}
           />
