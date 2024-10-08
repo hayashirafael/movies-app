@@ -6,7 +6,6 @@ export async function getMoviesList() {
     const {data} = await api.get<MoviesDTO>('/movie/popular');
     return data.results;
   } catch (error) {
-    console.log(error);
-    return [];
+    throw error;
   }
 }
