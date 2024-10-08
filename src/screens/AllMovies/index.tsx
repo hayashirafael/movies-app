@@ -1,27 +1,35 @@
-import { useState } from "react";
 import * as S from "./styles";
+import { Typography } from "@components/Typography";
 import { MoviePoster } from "@components/MoviePoster";
 import { Loading } from "@components/Loading";
-import { useNavigation } from "@react-navigation/native";
 import { useMovie } from "@hooks/useMovie";
+import { useNavigation } from "@react-navigation/native";
 
 export function AllMovies() {
   const {
-    movies
+    movies,
+    isLoading,
+    error
   } = useMovie();
-  const [isLoading, setIsLoading] = useState(false);
   const { navigate } = useNavigation();
 
   if (isLoading) return <Loading />
 
+  if (error) return (
+    <S.ErrorContainer testID="movies-error-container">
+      <Typography text={error.message} />
+    </S.ErrorContainer>
+  )
+
   return (
-    <S.Container>
+    <S.Container testID="movies-container">
       <S.MoviesList
         data={movies}
         keyExtractor={(item) => String(item.id)}
         ItemSeparatorComponent={S.ItemSeparator}
         renderItem={({ item, index }) => (
           <MoviePoster
+            testID={`movie-poster-${index}`}
             posterUrl={item.poster_path}
             onPress={() => navigate("movieDetails", { movie: item })}
           />
