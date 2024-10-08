@@ -1,16 +1,16 @@
+import { useEffect, useRef, useState } from "react";
 import { Image, Keyboard, TextInput } from "react-native";
 import * as S from "./styles";
-import { useTheme } from "styled-components/native";
-import Logo from '../../assets/icon.png';
-import { Controller, useForm } from "react-hook-form";
-import { Input } from "@components/Input";
-import { Lock, User } from "lucide-react-native";
-import { Button } from "@components/Button";
 import { Typography } from "@components/Typography";
+import { Input } from "@components/Input";
+import { Button } from "@components/Button";
+import { useAuth } from "@hooks/useAuth";
+import { useTheme } from "styled-components/native";
+import { Controller, useForm } from "react-hook-form";
+import { Lock, User } from "lucide-react-native";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useEffect, useRef, useState } from "react";
-import { useAuth } from "@hooks/useAuth";
+import Logo from '../../assets/icon.png';
 
 type FormDataProps = {
   user: string
@@ -18,33 +18,33 @@ type FormDataProps = {
 }
 
 const signUpSchema = yup.object({
-  user: yup.string().required('Informe o usuário').min(4, 'O usuário deve ter ao menos 4 caracteres'),
-  password: yup.string().required('Informe a senha').min(3, 'A senha deve ao menos 3 dígitos'),
+  user: yup.string().required('Informe o usuário'),
+  password: yup.string().required('Informe a senha'),
 });
 
 export function SignIn() {
   const [filled, setFilled] = useState<boolean>(false);
-  const { signIn, authError } = useAuth();
+  const { signIn, authError, isLoading } = useAuth();
   const theme = useTheme();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const passwordRef = useRef<TextInput>(null);
 
-  const { control, handleSubmit, formState: { errors }, setError } = useForm<FormDataProps>({
+  const { control, handleSubmit, formState: { errors }, setError, watch } = useForm<FormDataProps>({
     resolver: yupResolver(signUpSchema)
   });
+  const watchedFields = watch(['user', 'password']);
 
-  function inputFilled() {
-    const { user, password } = control._formValues;
-    if (!!user && !!password) {
-      setFilled(true);
-      return;
-    }
-    setFilled(false);
-    return;
+  function disableButton() {
+    if (watchedFields[0] && watchedFields[1]) return setFilled(true);
+    return setFilled(false)
   }
 
   function handleSignUp({ user, password }: FormDataProps) {
-    signIn(user, password);
+    try {
+      signIn(user, password);
+    } catch (error) {
+      throw error;
+    }
   }
 
   useEffect(() => {
@@ -74,6 +74,10 @@ export function SignIn() {
     }
   }, [authError])
 
+  useEffect(() => {
+    disableButton()
+  }, [watchedFields])
+
   return (
     <S.Container>
       {
@@ -92,6 +96,7 @@ export function SignIn() {
         rules={{ required: 'Informe o usuário' }}
         render={({ field: { onChange, value } }) => (
           <Input
+            testID="user-input"
             icon={User}
             onChangeText={onChange}
             value={value}
@@ -109,10 +114,10 @@ export function SignIn() {
         rules={{ required: 'Informe a senha' }}
         render={({ field: { onChange, value } }) => (
           <Input
+            testID="password-input"
             ref={passwordRef}
             icon={Lock}
             onChangeText={onChange}
-            onChange={() => inputFilled()}
             errorMessage={errors.password?.message}
             value={value}
             label="Senha"
@@ -126,9 +131,11 @@ export function SignIn() {
       />
 
       <Button
+        testID="submit-button"
         text="Entrar"
         isFilled={filled}
         onPress={handleSubmit(handleSignUp)}
+        isLoading={isLoading}
       />
 
       <S.ForgotPasswordButton>
