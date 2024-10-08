@@ -1,4 +1,3 @@
-import { useTheme } from "styled-components/native";
 import { Header } from "@components/Header";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AppTabsRoutes } from "./app.tabs.routes";

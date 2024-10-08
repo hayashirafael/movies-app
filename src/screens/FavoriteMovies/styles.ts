@@ -6,8 +6,6 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const Text = styled.Text``;
-
 export const ItemSeparator = styled.View`
   height: 16px;
   

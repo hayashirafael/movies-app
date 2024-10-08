@@ -15,6 +15,3 @@ export async function addStorageFavoriteMovie(movie: MovieDTO) {
   await AsyncStorage.setItem(ASYNC_STORAGE_KEY, JSON.stringify(storage));
 }
 
-export async function deleteAll() {
-  await AsyncStorage.removeItem(ASYNC_STORAGE_KEY);
-}
