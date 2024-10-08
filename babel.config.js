@@ -20,6 +20,7 @@ module.exports = function (api) {
             '@routes': './src/routes',
             '@theme': './src/theme',
             '@libs': './src/libs',
+            '@tests': './__tests__'
           }
         },
       ],
